@@ -1,4 +1,4 @@
-/* nvd3 version 1.6.0(https://github.com/liquidpele/nvd3) 2014-12-13 */
+/* nvd3 version 1.7.0(https://github.com/liquidpele/nvd3) 2014-12-17 */
 (function(){
 
 // set up main nv object on window
@@ -5188,6 +5188,8 @@ nv.models.linePlusBarChart = function() {
         , transitionDuration = 0
         , state = nv.utils.state()
         , defaultState = null
+        , legendLeftAxisHint = ' (left axis)'
+        , legendRightAxisHint = ' (right axis)'
         ;
 
     lines
@@ -5370,7 +5372,7 @@ nv.models.linePlusBarChart = function() {
                 g.select('.nv-legendWrap')
                     .datum(data.map(function(series) {
                         series.originalKey = series.originalKey === undefined ? series.key : series.originalKey;
-                        series.key = series.originalKey + (series.bar ? ' (left axis)' : ' (right axis)');
+                        series.key = series.originalKey + (series.bar ? legendLeftAxisHint : legendRightAxisHint);
                         return series;
                     }))
                     .call(legend);
@@ -5715,6 +5717,8 @@ nv.models.linePlusBarChart = function() {
         focusHeight:    {get: function(){return focusHeight;}, set: function(_){focusHeight=_;}},
         focusShowAxisX:    {get: function(){return focusShowAxisX;}, set: function(_){focusShowAxisX=_;}},
         focusShowAxisY:    {get: function(){return focusShowAxisY;}, set: function(_){focusShowAxisY=_;}},
+        legendLeftAxisHint:    {get: function(){return legendLeftAxisHint;}, set: function(_){legendLeftAxisHint=_;}},
+        legendRightAxisHint:    {get: function(){return legendRightAxisHint;}, set: function(_){legendRightAxisHint=_;}},
 
         // options that require extra logic in the setter
         margin: {get: function(){return margin;}, set: function(_){
@@ -6229,7 +6233,6 @@ nv.models.lineWithFocusChart = function() {
         }},
         duration:    {get: function(){return transitionDuration;}, set: function(_){
             transitionDuration=_;
-            //renderWatch.reset(duration);
             yAxis.duration(transitionDuration);
             xAxis.duration(transitionDuration);
         }},
@@ -8725,7 +8728,7 @@ nv.models.pie = function() {
             if (pie.padAngle && padAngle) {
                 pie.padAngle(padAngle);
             }
-            // cornerRadius added in d3 3.5
+
             if (arc.cornerRadius && cornerRadius) {
                 arc.cornerRadius(cornerRadius);
                 arcOver.cornerRadius(cornerRadius);
@@ -8753,8 +8756,8 @@ nv.models.pie = function() {
             slices.exit().remove();
             pieLabels.exit().remove();
 
-            var ae = slices.enter().append('g');
-            ae.attr('class', 'nv-slice');
+            var ae = slices.enter().append('g')
+            ae.attr('class', 'nv-slice')
             ae.on('mouseover', function(d,i){
                 d3.select(this).classed('hover', true);
                 if (growOnHover) {
@@ -11344,5 +11347,5 @@ nv.models.stackedAreaChart = function() {
     return chart;
 };
 
-nv.version = "1.6.0";
+nv.version = "1.7.0";
 })();
