@@ -1,6 +1,6 @@
 {
   "name": "nvd3",
-  "version": "1.6.0-cloudflare-1",
+  "version": "1.6.0-patch-1",
   "scripts": {
     "postinstall": "node ./node_modules/.bin/bower update --force --config.interactive=0"
   },
